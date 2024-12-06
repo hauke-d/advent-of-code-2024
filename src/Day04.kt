@@ -4,7 +4,7 @@ fun main() {
 
     fun part1(input: List<String>): Int {
         val search = "XMAS"
-        
+
         val points = search.associateWith { mutableSetOf<Pair<Int, Int>>() }
         input.forEachIndexed { y, line ->
             line.forEachIndexed { x, char ->

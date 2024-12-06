@@ -20,6 +20,12 @@ fun <T> List<String>.splitEach(transform: (String) -> T): List<List<T>> = this.m
     it.split("\\s+".toRegex()).map(transform)
 }
 
+fun <T> List<String>.mapPositionsNotNull(transform: (Int, Int, Char) -> T?): List<T> {
+    return this.flatMapIndexed { y, line ->
+        line.mapIndexedNotNull { x, c -> transform(x, y, c) }
+    }
+}
+
 /**
  * Converts string to md5 hash.
  */
