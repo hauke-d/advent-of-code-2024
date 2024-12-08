@@ -11,13 +11,13 @@ fun readInput(name: String) = Path("src/$name.txt").readText().trim().lines()
 /**
  * Read pairs and transform values
  */
-fun <T> List<String>.splitEachToPairs(transform: (String) -> T) : List<Pair<T, T>> = this.map {
-    val values = it.split("\\s+".toRegex())
+fun <T> List<String>.splitEachToPairs(separator: String = "\\s+", transform: (String) -> T) : List<Pair<T, T>> = this.map {
+    val values = it.split(separator.toRegex())
     transform(values[0]) to transform(values[1])
 }
 
-fun <T> List<String>.splitEach(transform: (String) -> T): List<List<T>> = this.map {
-    it.split("\\s+".toRegex()).map(transform)
+fun <T> List<String>.splitEach(separator: String = "\\s+", transform: (String) -> T): List<List<T>> = this.map {
+    it.split(separator.toRegex()).map(transform)
 }
 
 fun <T> List<String>.mapPositionsNotNull(transform: (Int, Int, Char) -> T?): List<T> {
