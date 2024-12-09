@@ -12,11 +12,8 @@ fun main() {
                 (i + 1..<locations.size).flatMap { j ->
                     val a = locations[i]
                     val b = locations[j]
-                    val diff = a.first - b.first to a.second - b.second
-                    listOf(
-                        a.first + diff.first to a.second + diff.second,
-                        b.first - diff.first to b.second - diff.second
-                    ).filter { node ->
+                    val diff = a - b
+                    listOf(a + diff, b - diff).filter { node ->
                         node in grid
                     }
                 }
@@ -32,17 +29,17 @@ fun main() {
                 (i + 1..<locations.size).flatMap { j ->
                     val a = locations[i]
                     val b = locations[j]
-                    val diff = a.first - b.first to a.second - b.second
+                    val diff = a - b
                     val nodes = mutableListOf(a, b)
                     var p = a
                     while (p in grid) {
                         nodes.add(p)
-                        p = p.first + diff.first to p.second + diff.second
+                        p += diff
                     }
                     p = b
                     while (p in grid) {
                         nodes.add(p)
-                        p = p.first - diff.first to p.second - diff.second
+                        p -= diff
                     }
                     nodes
                 }

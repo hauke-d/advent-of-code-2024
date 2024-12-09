@@ -20,7 +20,7 @@ fun main() {
             directions.map { direction -> // For each direction
                 var i = 0
                 search.takeWhile { char -> // Walk as long as chars match
-                    val new = first.first + i * direction.first to first.second + i * direction.second
+                    val new = first + direction * i
                     i++
                     points[char]?.contains(new) ?: false
                 } == search
@@ -41,8 +41,8 @@ fun main() {
 
         return points.filterValues { it == 'A' }.keys.count { center ->
             directions.all { direction ->
-                val a = center.first + direction.first to center.second + direction.second
-                val b = center.first - direction.first to center.second - direction.second
+                val a = center + direction
+                val b = center - direction
                 points.contains(a) && points.contains(b) && points[a] == other[points[b]]
             }
         }

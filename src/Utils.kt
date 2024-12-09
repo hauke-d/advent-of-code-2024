@@ -26,6 +26,18 @@ fun <T> List<String>.mapPositionsNotNull(transform: (Int, Int, Char) -> T?): Lis
     }
 }
 
+operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> {
+    return first + other.first to second + other.second
+}
+
+operator fun Pair<Int, Int>.minus(other: Pair<Int, Int>): Pair<Int, Int> {
+    return first - other.first to second - other.second
+}
+
+operator fun Pair<Int, Int>.times(other: Int): Pair<Int, Int> {
+    return first * other to second * other
+}
+
 /**
  * Converts string to md5 hash.
  */
