@@ -4,7 +4,7 @@ data object NoObstacle : Point
 
 sealed class Direction(val x: Int, val y: Int) {
     abstract fun next(): Direction
-    fun add(position: Pair<Int, Int>): Pair<Int, Int> {
+    fun add(position: Coordinate): Coordinate {
         return x + position.first to y + position.second
     }
 }
@@ -28,18 +28,18 @@ data object Left : Direction(-1, 0) {
 sealed interface WalkResult
 data object Loop : WalkResult
 data class Done(
-    val position: Pair<Int, Int>,
+    val position: Coordinate,
     val direction: Direction,
-    val visited: Map<Pair<Int, Int>, Set<Direction>>
+    val visited: Map<Coordinate, Set<Direction>>
 ) : WalkResult
-data class OutOfBounds(val visited: Map<Pair<Int, Int>, Set<Direction>>) : WalkResult
+data class OutOfBounds(val visited: Map<Coordinate, Set<Direction>>) : WalkResult
 
 fun main() {
     fun walk(
-        startPosition: Pair<Int, Int>,
+        startPosition: Coordinate,
         startDirection: Direction,
-        grid: Map<Pair<Int, Int>, Point>,
-        startVisited: Map<Pair<Int, Int>, Set<Direction>> = emptyMap(),
+        grid: Map<Coordinate, Point>,
+        startVisited: Map<Coordinate, Set<Direction>> = emptyMap(),
         maxSteps: Int = -1
     ): WalkResult {
         var position = startPosition
@@ -62,17 +62,17 @@ fun main() {
         return Done(position, direction, visited)
     }
 
-    fun part1(start: Pair<Int, Int>, grid: Map<Pair<Int, Int>, Point>): Int {
+    fun part1(start: Coordinate, grid: Map<Coordinate, Point>): Int {
         return (walk(start, Up, grid) as OutOfBounds).visited.size
     }
 
-    fun part2(start: Pair<Int, Int>, grid: Map<Pair<Int, Int>, Point>): Int {
+    fun part2(start: Coordinate, grid: Map<Coordinate, Point>): Int {
         // One step at a time and branch out
         var position = start
         var direction: Direction = Up
-        val visited = mapOf<Pair<Int, Int>, Set<Direction>>()
+        val visited = mapOf<Coordinate, Set<Direction>>()
         var done = false
-        val loopObstacles = mutableSetOf<Pair<Int, Int>>()
+        val loopObstacles = mutableSetOf<Coordinate>()
         while (!done) {
             when (val result = walk(position, direction, grid, visited, 1)) {
                 is OutOfBounds -> {

@@ -1,5 +1,6 @@
 import java.math.BigInteger
 import java.security.MessageDigest
+import kotlin.coroutines.CoroutineContext
 import kotlin.io.path.Path
 import kotlin.io.path.readText
 
@@ -26,15 +27,31 @@ fun <T> List<String>.mapPositionsNotNull(transform: (Int, Int, Char) -> T?): Lis
     }
 }
 
-operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> {
+typealias Coordinate = Pair<Int, Int>
+
+val ALL_DIRECTIONS = listOf(
+    Coordinate(0, 1),
+    Coordinate(0, -1),
+    Coordinate(1, 0),
+    Coordinate(-1, 0)
+)
+
+val ALL_DIRECTIONS_WITH_DIAGONALS = ALL_DIRECTIONS + listOf(
+    Coordinate(1, 1),
+    Coordinate(-1, -1),
+    Coordinate(1, -1),
+    Coordinate(-1, 1),
+)
+
+operator fun Coordinate.plus(other: Coordinate): Coordinate {
     return first + other.first to second + other.second
 }
 
-operator fun Pair<Int, Int>.minus(other: Pair<Int, Int>): Pair<Int, Int> {
+operator fun Coordinate.minus(other: Coordinate): Coordinate {
     return first - other.first to second - other.second
 }
 
-operator fun Pair<Int, Int>.times(other: Int): Pair<Int, Int> {
+operator fun Coordinate.times(other: Int): Coordinate {
     return first * other to second * other
 }
 

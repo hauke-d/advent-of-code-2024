@@ -4,7 +4,7 @@ data object Nothing : Location
 
 fun main() {
 
-    fun part1(antennas: Map<Location, List<Pair<Int, Int>>>, grid: Set<Pair<Int, Int>>): Int {
+    fun part1(antennas: Map<Location, List<Coordinate>>, grid: Set<Coordinate>): Int {
         return antennas.flatMap {
             val locations = it.value
             // All possible pairs
@@ -21,7 +21,7 @@ fun main() {
         }.toSet().size
     }
 
-    fun part2(antennas: Map<Location, List<Pair<Int, Int>>>, grid: Set<Pair<Int, Int>>): Int {
+    fun part2(antennas: Map<Location, List<Coordinate>>, grid: Set<Coordinate>): Int {
         return antennas.flatMap {
             val locations = it.value
             // All possible pairs

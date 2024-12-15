@@ -5,19 +5,15 @@ fun main() {
     fun part1(input: List<String>): Int {
         val search = "XMAS"
 
-        val points = search.associateWith { mutableSetOf<Pair<Int, Int>>() }
+        val points = search.associateWith { mutableSetOf<Coordinate>() }
         input.forEachIndexed { y, line ->
             line.forEachIndexed { x, char ->
                 points[char]?.add(x to y)
             }
         }
 
-        val directions = (-1..1).flatMap { x ->
-            (-1..1).map { y -> x to y }
-        }.filter { p -> p.first != 0 || p.second != 0 }
-
         return points['X']?.sumOf { first -> // For all starting points X
-            directions.map { direction -> // For each direction
+            ALL_DIRECTIONS_WITH_DIAGONALS.map { direction -> // For each direction
                 var i = 0
                 search.takeWhile { char -> // Walk as long as chars match
                     val new = first + direction * i
@@ -29,7 +25,7 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val points = mutableMapOf<Pair<Int, Int>, Char>()
+        val points = mutableMapOf<Coordinate, Char>()
         input.forEachIndexed { y, line ->
             line.forEachIndexed { x, char ->
                 points[x to y] = char
